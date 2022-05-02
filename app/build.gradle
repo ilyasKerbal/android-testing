@@ -64,6 +64,9 @@ dependencies {
 
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junitVersion"
+    testImplementation 'androidx.test.ext:junit:1.1.2'
+    testImplementation 'androidx.test.ext:junit-ktx:1.1.2'
+    testImplementation 'org.robolectric:robolectric:4.4'
     testImplementation 'org.hamcrest:hamcrest:2.2'
 
     // AndroidX Test - Instrumented testing
