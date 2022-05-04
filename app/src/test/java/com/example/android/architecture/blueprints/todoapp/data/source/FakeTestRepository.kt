@@ -17,7 +17,7 @@ class FakeTestRepository : TasksRepository {
     }
 
     override suspend fun refreshTasks() {
-        TODO("Not yet implemented")
+        observableTasks.value = getTasks()
     }
 
     override fun observeTasks(): LiveData<Result<List<Task>>> {
@@ -26,7 +26,7 @@ class FakeTestRepository : TasksRepository {
     }
 
     override suspend fun refreshTask(taskId: String) {
-        observableTasks.value = getTasks()
+        TODO("Not yet implemented")
     }
 
     override fun observeTask(taskId: String): LiveData<Result<Task>> {
