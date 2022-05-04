@@ -24,16 +24,19 @@ import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository
+import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
+import com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel
 import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 
 /**
  * ViewModel for the Details screen.
  */
-class TaskDetailViewModel(application: Application) : AndroidViewModel(application) {
+class TaskDetailViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
     // Note, for testing and architecture purposes, it's bad practice to construct the repository
     // here. We'll show you how to fix this during the codelab
-    private val tasksRepository = DefaultTasksRepository.getRepository(application)
+    // private val tasksRepository = DefaultTasksRepository.getRepository(application)
 
     private val _taskId = MutableLiveData<String>()
 
@@ -115,5 +118,14 @@ class TaskDetailViewModel(application: Application) : AndroidViewModel(applicati
 
     private fun showSnackbarMessage(@StringRes message: Int) {
         _snackbarText.value = Event(message)
+    }
+}
+
+class TaskDetailsViewModelFactory(private val tasksRepository: TasksRepository) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(TaskDetailViewModel::class.java)){
+            return TaskDetailViewModel(tasksRepository) as T
+        }
+        throw IllegalArgumentException("Cannot create new instance of TaskDetailsViewModel")
     }
 }
