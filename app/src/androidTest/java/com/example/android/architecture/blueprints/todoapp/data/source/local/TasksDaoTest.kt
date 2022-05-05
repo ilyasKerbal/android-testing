@@ -55,4 +55,23 @@ class TasksDaoTest {
         assertThat(loaded.isCompleted, `is`(task.isCompleted))
     }
 
+    @Test
+    fun updateTaskAndGetById() = runBlockingTest {
+        // 1. Insert a task into the DAO.
+        val task = Task("title", "description", isCompleted = false)
+        database.taskDao().insertTask(task)
+
+        // 2. Update the task by creating a new task with the same ID but different attributes.
+        val updatedTask = task.copy(title = "updated title", description = "updated description", isCompleted = !task.isCompleted)
+        database.taskDao().updateTask(updatedTask)
+        val loaded = database.taskDao().getTaskById(updatedTask.id)
+
+        // 3. Check that when you get the task by its ID, it has the updated values.
+        assertThat<Task>(loaded as Task, notNullValue())
+        assertThat(loaded.id, `is`(updatedTask.id))
+        assertThat(loaded.title, `is`(updatedTask.title))
+        assertThat(loaded.description, `is`(updatedTask.description))
+        assertThat(loaded.isCompleted, `is`(updatedTask.isCompleted))
+    }
+
 }
