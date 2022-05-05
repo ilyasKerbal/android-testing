@@ -37,6 +37,7 @@ android {
 
     testOptions.unitTests {
         includeAndroidResources = true
+        returnDefaultValues = true
     }
 
 }
@@ -98,6 +99,9 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "androidx.fragment:fragment-ktx:$fragmentKtxVersion"
+
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+
 
 //    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 //    implementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
